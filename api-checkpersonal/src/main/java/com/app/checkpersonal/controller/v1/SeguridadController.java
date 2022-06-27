@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.checkpersonal.config.exception.ApiMarathonException;
+import com.app.checkpersonal.config.exception.ApiCheckPersonalException;
 import com.app.checkpersonal.model.Modulo;
 import com.app.checkpersonal.model.Perfil;
 import com.app.checkpersonal.model.Sistema;
@@ -135,7 +135,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}			
 	}
 	
@@ -158,7 +158,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}	
 	/* Fin Servicios Entidad Perfil */
@@ -236,7 +236,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}			
 	}
 	
@@ -259,7 +259,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}	
 	/* Fin Servicios Entidad Sistema */
@@ -344,7 +344,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}			
 	}
 	
@@ -367,7 +367,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}	
 	/* Fin Servicios Entidad Modulo */
@@ -457,7 +457,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}			
 	}
 	
@@ -479,7 +479,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}			
 	}
 	
@@ -502,7 +502,7 @@ public class SeguridadController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}	
 	/* Fin Servicios Entidad Usuario */

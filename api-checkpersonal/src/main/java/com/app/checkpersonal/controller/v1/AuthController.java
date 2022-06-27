@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.checkpersonal.config.exception.ApiMarathonException;
+import com.app.checkpersonal.config.exception.ApiCheckPersonalException;
 import com.app.checkpersonal.config.exception.RestException;
 import com.app.checkpersonal.config.security.model.JwtAuthenticationRequest;
 import com.app.checkpersonal.config.security.model.JwtUser;
@@ -125,7 +125,7 @@ public class AuthController {
 			} else {
 				return new ResponseEntity<>(new RestException("El usuario no tiene acceso"), HttpStatus.NOT_FOUND);
 			}
-		} catch (ApiMarathonException | UnsupportedEncodingException e) {
+		} catch (ApiCheckPersonalException | UnsupportedEncodingException e) {
 			return new ResponseEntity<>(new RestException(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
 	}
@@ -225,7 +225,7 @@ public class AuthController {
 	 * }
 	 */
 
-	private void authenticate(String username, String password) throws ApiMarathonException {
+	private void authenticate(String username, String password) throws ApiCheckPersonalException {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
 		// le pasamos los datos del formulario
@@ -233,10 +233,10 @@ public class AuthController {
 			
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new ApiMarathonException("User is disabled!");
+			throw new ApiCheckPersonalException("User is disabled!");
 
 		} catch (BadCredentialsException e) {
-			throw new ApiMarathonException("Datos incorrectos!");
+			throw new ApiCheckPersonalException("Datos incorrectos!");
 		}
 	}
 

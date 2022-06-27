@@ -55,6 +55,6 @@ public class Usuario {
 	private String email;
 	
 	@ApiModelProperty(value = "Estado lógico del registro del Empresa.")
-	private Boolean estado;
+	private boolean estado;
 
 }

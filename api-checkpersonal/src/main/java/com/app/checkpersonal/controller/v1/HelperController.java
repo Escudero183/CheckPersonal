@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.app.checkpersonal.config.exception.ApiMarathonException;
+import com.app.checkpersonal.config.exception.ApiCheckPersonalException;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -62,7 +62,7 @@ public class HelperController {
 	    	}
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -86,7 +86,7 @@ public class HelperController {
 	    	}
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -117,7 +117,7 @@ public class HelperController {
 	    	}
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(new ApiMarathonException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

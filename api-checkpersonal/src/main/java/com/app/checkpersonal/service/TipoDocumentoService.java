@@ -12,49 +12,49 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.app.checkpersonal.model.Empresa;
-import com.app.checkpersonal.repository.EmpresaRepository;
+import com.app.checkpersonal.model.TipoDocumento;
+import com.app.checkpersonal.repository.TipoDocumentoRepository;
 
+/**
+ * @author Linygn Escudero
+ *
+ */
 @Service
-public class EmpresaService {
+public class TipoDocumentoService {
 	
 	@Autowired
-	private EmpresaRepository empresaRepository;
+	private TipoDocumentoRepository tipoDocumentoRepository;
 	
-	public Empresa insert(Empresa tipoDocumento) {
-		return empresaRepository.save(tipoDocumento);
+	public TipoDocumento insert(TipoDocumento tipoDocumento) {
+		return tipoDocumentoRepository.save(tipoDocumento);
 	}
 	
-	public void update(Empresa item) {
-		empresaRepository.save(item);
+	public void update(TipoDocumento item) {
+		tipoDocumentoRepository.save(item);
 	}
 	
-	public void delete (Empresa item) {
-		empresaRepository.save(item);		
+	public void delete (TipoDocumento item) {
+		tipoDocumentoRepository.save(item);		
 	}
 	
-	public List<Empresa> findAll() {
-		return (List<Empresa>) empresaRepository.findAll();
+	public List<TipoDocumento> findAll() {
+		return (List<TipoDocumento>) tipoDocumentoRepository.findAll();
 	}
 	
-	public List<Empresa> findByRuc(String ruc) {
-		return (List<Empresa>) empresaRepository.findByRuc(ruc);
+	public TipoDocumento findById(Integer id) {
+		return tipoDocumentoRepository.findById(id).orElse(null);
 	}
 	
-	public Empresa findById(Integer id) {
-		return empresaRepository.findById(id).orElse(null);
-	}
-	
-	public List<Empresa> findAll(String query, String sortBy) {
+	public List<TipoDocumento> findAll(String query, String sortBy) {
 		Sort sort;
 		if (!sortBy.equals("")) {
 			String sortColumn = sortBy.split("\\|")[0];
 			String sortDirection = sortBy.split("\\|")[1].toUpperCase();
 			sort = Sort.by(sortDirection.equals("DESC") ? Direction.DESC : Direction.ASC, sortColumn);
 		} else {
-			sort = Sort.by(Direction.ASC, "idEmpresa");
+			sort = Sort.by(Direction.ASC, "idTipoDocumento");
 		}
-		return empresaRepository.findAll("%" + query.toLowerCase() + "%", sort);
+		return tipoDocumentoRepository.findAll("%" + query.toLowerCase() + "%", sort);
 	}
 
 	public HashMap<String, Object> findAll(String query, int page, int limit, String sortBy) {
@@ -68,11 +68,11 @@ public class EmpresaService {
 			pageable = PageRequest.of(page - 1, limit, sort);
 
 		} else {
-			Sort sort = Sort.by(Direction.ASC, "idEmpresa");
+			Sort sort = Sort.by(Direction.ASC, "idTipoDocumento");
 			pageable = PageRequest.of(page - 1, limit, sort);
 
 		}
-		Page<Empresa> data = empresaRepository.findAllParams("%" + query.toLowerCase() + "%", pageable);
+		Page<TipoDocumento> data = tipoDocumentoRepository.findAllParams("%" + query.toLowerCase() + "%", pageable);
 		if (!data.getContent().isEmpty()) {
 			result.put("items", data.getContent());
 		} else {

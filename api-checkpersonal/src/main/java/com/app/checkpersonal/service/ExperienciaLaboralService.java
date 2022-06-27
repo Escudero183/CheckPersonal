@@ -33,8 +33,8 @@ public class ExperienciaLaboralService {
 		experienciaLaboralRepository.save(item);		
 	}
 	
-	public List<ExperienciaLaboral> findAll() {
-		return (List<ExperienciaLaboral>) experienciaLaboralRepository.findAll();
+	public List<ExperienciaLaboral> findAll(Integer idPersonal, String query) {
+		return (List<ExperienciaLaboral>) experienciaLaboralRepository.findAll(idPersonal, query);
 	}
 	
 	public ExperienciaLaboral findById(Integer id) {

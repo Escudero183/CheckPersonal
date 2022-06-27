@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.app.checkpersonal.config.exception.ApiMarathonException;
+import com.app.checkpersonal.config.exception.ApiCheckPersonalException;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -27,7 +27,7 @@ import net.coobird.thumbnailator.geometry.Positions;
  */
 public class ManageFiles {
 	
-	public String upLoadFiles(String rootPath, String folder, MultipartFile file, String namefile) throws ApiMarathonException {
+	public String upLoadFiles(String rootPath, String folder, MultipartFile file, String namefile) throws ApiCheckPersonalException {
         String ruta;
         String SAVE_DIR = folder;
         String pathSeparador = "";//File.separator;

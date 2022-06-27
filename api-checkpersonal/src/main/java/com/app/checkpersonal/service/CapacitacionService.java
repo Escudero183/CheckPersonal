@@ -33,8 +33,8 @@ public class CapacitacionService {
 		capacitacionRepository.save(item);		
 	}
 	
-	public List<Capacitacion> findAll() {
-		return (List<Capacitacion>) capacitacionRepository.findAll();
+	public List<Capacitacion> findAll(Integer idPersonal, String query) {
+		return (List<Capacitacion>) capacitacionRepository.findAll(idPersonal, query);
 	}
 	
 	public Capacitacion findById(Integer id) {

@@ -33,8 +33,8 @@ public class HabilidadService {
 		habilidadRepository.save(item);		
 	}
 	
-	public List<Habilidad> findAll() {
-		return (List<Habilidad>) habilidadRepository.findAll();
+	public List<Habilidad> findAll(Integer idPersonal, String query) {
+		return (List<Habilidad>) habilidadRepository.findAll(idPersonal, query);
 	}
 	
 	public Habilidad findById(Integer id) {

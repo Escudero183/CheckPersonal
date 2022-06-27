@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.checkpersonal.repository.UbigeoRepository;
+import com.app.checkpersonal.service.TipoDocumentoService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -32,6 +33,17 @@ public class CatalogoController {
 	
 	@Autowired
 	private UbigeoRepository ubigeoRepository;
+	
+	@Autowired
+	private TipoDocumentoService tipoDocumentoService; 
+	
+	/* Servicios para la Entidad Tipo de Documento */
+	@ApiOperation(value = "Lista todas los Tipos de Documentos", authorizations = {@Authorization(value = "apiKey") })
+	@GetMapping(value = "/tipo_documento")	
+	public ResponseEntity<?> findAllTipoDocumento(HttpServletRequest request) {		
+		return new ResponseEntity<>(tipoDocumentoService.findAll(), HttpStatus.OK);
+	}
+	/* Fin Servicios para la Entidad Tipo de Documento */
 	
 	/* Servicios para la Entidad Ubigeo */
 	@ApiOperation(value = "Lista Ubigeos", authorizations = {@Authorization(value = "apiKey") })

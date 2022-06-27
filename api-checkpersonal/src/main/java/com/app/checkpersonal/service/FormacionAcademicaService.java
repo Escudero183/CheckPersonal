@@ -33,8 +33,8 @@ public class FormacionAcademicaService {
 		formacionAcademicaRepository.save(item);		
 	}
 	
-	public List<FormacionAcademica> findAll() {
-		return (List<FormacionAcademica>) formacionAcademicaRepository.findAll();
+	public List<FormacionAcademica> findAll(Integer idPersonal, String query) {
+		return (List<FormacionAcademica>) formacionAcademicaRepository.findAll(idPersonal, query);
 	}
 	
 	public FormacionAcademica findById(Integer id) {
