@@ -42,7 +42,7 @@ public class Perfil {
 	private String icono;
 	
 	@ApiModelProperty(value = "Estado lógico del registro del Perfil.")
-	private boolean estado;
+	private Boolean estado;
 	
 	@ManyToOne
 	@JoinColumn(name = "sistema_id")

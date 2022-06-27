@@ -65,7 +65,7 @@ public class Modulo {
 	private String esquema;
 	
 	@ApiModelProperty(value = "Estado lógico del registro del Módulo.")
-	private boolean estado;
+	private Boolean estado;
 	
 	@ManyToOne
 	@JoinColumn(name = "sistema_id")

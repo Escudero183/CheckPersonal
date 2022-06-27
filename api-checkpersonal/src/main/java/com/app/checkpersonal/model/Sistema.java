@@ -42,6 +42,6 @@ public class Sistema {
 	private String icono;
 	
 	@ApiModelProperty(value = "Estado lógico del registro del Sistema.")
-	private boolean estado;
+	private Boolean estado;
 
 }
