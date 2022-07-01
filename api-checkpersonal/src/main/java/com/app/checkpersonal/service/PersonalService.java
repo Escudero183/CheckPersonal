@@ -14,12 +14,16 @@ import org.springframework.stereotype.Service;
 
 import com.app.checkpersonal.model.Personal;
 import com.app.checkpersonal.repository.PersonalRepository;
+import com.app.checkpersonal.repository.UbigeoRepository;
 
 @Service
 public class PersonalService {
 	
 	@Autowired
 	private PersonalRepository personalRepository;
+	
+	@Autowired
+	private UbigeoRepository ubigeoRepository;
 	
 	public Personal insert(Personal item) {
 		return personalRepository.save(item);
@@ -41,7 +45,7 @@ public class PersonalService {
 		return personalRepository.findById(id).orElse(null);
 	}
 	
-	public List<Personal> findAll(String query, String sortBy) {
+	public List<Personal> findAll(String sexo, String query, String sortBy) {
 		Sort sort;
 		if (!sortBy.equals("")) {
 			String sortColumn = sortBy.split("\\|")[0];
@@ -50,10 +54,10 @@ public class PersonalService {
 		} else {
 			sort = Sort.by(Direction.ASC, "idPersonal");
 		}
-		return personalRepository.findAll("%" + query.toLowerCase() + "%", sort);
+		return personalRepository.findAll(sexo, "%" + query.toLowerCase() + "%", sort);
 	}
 
-	public HashMap<String, Object> findAll(String query, int page, int limit, String sortBy) {
+	public HashMap<String, Object> findAll(String sexo, String query, int page, int limit, String sortBy) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Pageable pageable;
 		if (!sortBy.equals("")) {
@@ -68,7 +72,7 @@ public class PersonalService {
 			pageable = PageRequest.of(page - 1, limit, sort);
 
 		}
-		Page<Personal> data = personalRepository.findAllParams("%" + query.toLowerCase() + "%", pageable);
+		Page<Personal> data = personalRepository.findAllParams(sexo, "%" + query.toLowerCase() + "%", pageable);
 		if (!data.getContent().isEmpty()) {
 			result.put("items", data.getContent());
 		} else {
@@ -83,7 +87,11 @@ public class PersonalService {
 	}
 	
 	public List<Personal> findByDocumento(Integer idTipoDocumento, String nroDocumento) {
-		return (List<Personal>) personalRepository.findByDocumento(idTipoDocumento, nroDocumento);
+		List<Personal> data = personalRepository.findByDocumento(idTipoDocumento, nroDocumento);
+		for(Personal personal : data) {
+			personal.setUbigeoAll(ubigeoRepository.getUbigeoFull(personal.getUbigeo().getIdUbigeo()));
+		}
+		return data;
 	}
 
 }

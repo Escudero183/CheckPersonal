@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,8 +33,10 @@ public class ExperienciaLaboral {
 	
 	private String cargo;
 	
+	@JsonFormat(pattern="dd/MM/yyyy", locale="es-PE", timezone="America/Lima")
 	private Date fechaAlta;
 	
+	@JsonFormat(pattern="dd/MM/yyyy", locale="es-PE", timezone="America/Lima")
 	private Date fechaBaja;
 	
 	private Boolean estado;

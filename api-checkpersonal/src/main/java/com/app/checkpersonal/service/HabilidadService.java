@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.app.checkpersonal.model.Habilidad;
+import com.app.checkpersonal.model.IHabilidad;
 import com.app.checkpersonal.repository.HabilidadRepository;
 
 @Service
@@ -34,7 +35,7 @@ public class HabilidadService {
 	}
 	
 	public List<Habilidad> findAll(Integer idPersonal, String query) {
-		return (List<Habilidad>) habilidadRepository.findAll(idPersonal, query);
+		return (List<Habilidad>) habilidadRepository.findAll(idPersonal, "%" + query + "%");
 	}
 	
 	public Habilidad findById(Integer id) {
@@ -80,6 +81,10 @@ public class HabilidadService {
 		result.put("page", page);
 		result.put("sizeRows", limit);
 		return result;
+	}
+	
+	public List<IHabilidad> getTotals() {
+		return (List<IHabilidad>) habilidadRepository.getTotals();
 	}
 
 }

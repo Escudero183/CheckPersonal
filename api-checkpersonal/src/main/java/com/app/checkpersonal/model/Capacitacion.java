@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,6 +33,7 @@ public class Capacitacion {
 	
 	private String capacitacion;
 	
+	@JsonFormat(pattern="dd/MM/yyyy", locale="es-PE", timezone="America/Lima")
 	private Date fechaEmision;
 	
 	private Integer cantidadHoras;

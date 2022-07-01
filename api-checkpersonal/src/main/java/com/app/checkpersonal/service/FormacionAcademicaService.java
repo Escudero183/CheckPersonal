@@ -34,7 +34,7 @@ public class FormacionAcademicaService {
 	}
 	
 	public List<FormacionAcademica> findAll(Integer idPersonal, String query) {
-		return (List<FormacionAcademica>) formacionAcademicaRepository.findAll(idPersonal, query);
+		return (List<FormacionAcademica>) formacionAcademicaRepository.findAll(idPersonal, "%" + query + "%");
 	}
 	
 	public FormacionAcademica findById(Integer id) {

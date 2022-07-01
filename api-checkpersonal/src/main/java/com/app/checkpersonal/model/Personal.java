@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,8 +38,6 @@ public class Personal {
 	
 	private String apellidoMaterno;
 	
-	private String idUbigeo;
-	
 	private String direccion;
 	
 	private String sexo;
@@ -45,6 +46,7 @@ public class Personal {
 	
 	private String correo;
 	
+	@JsonFormat(pattern="dd/MM/yyyy", locale="es-PE", timezone="America/Lima")
 	private Date fechaNacimiento;
 	
 	private String presentacion;
@@ -58,5 +60,12 @@ public class Personal {
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_documento")
 	private TipoDocumento tipoDocumento;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_ubigeo")
+	private Ubigeo ubigeo;
+	
+	@Transient
+	private IUbigeo ubigeoAll;
 
 }

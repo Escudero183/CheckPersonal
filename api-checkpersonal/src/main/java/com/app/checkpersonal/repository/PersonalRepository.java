@@ -14,14 +14,14 @@ import com.app.checkpersonal.model.Personal;
 @Repository
 public interface PersonalRepository extends JpaRepository<Personal, Integer>{
 	
-	@Query("select t1 from Personal t1 Where t1.estado = true and (lower(t1.nombres) like :query or lower(t1.apellidoPaterno) like :query or lower(t1.apellidoMaterno) like :query or lower(t1.numeroDocumento) like :query)")
-	public Page<Personal> findAllParams(String query, Pageable pageable);
+	@Query("select t1 from Personal t1 Where t1.estado = true and (lower(t1.nombres) like :query or lower(t1.apellidoPaterno) like :query or lower(t1.apellidoMaterno) like :query or lower(t1.numeroDocumento) like :query) and (:sexo='-1' or (:sexo!='-1' and t1.sexo=:sexo))")
+	public Page<Personal> findAllParams(String sexo, String query, Pageable pageable);
 	
 	@Query("select t1 from Personal t1 Where t1.estado = true and (lower(t1.nombres) like :query or lower(t1.apellidoPaterno) like :query or lower(t1.apellidoMaterno) like :query or lower(t1.numeroDocumento) like :query)")
 	public List<Personal> findAll(String query);
 	
-	@Query("select t1 from Personal t1 Where t1.estado = true and (lower(t1.nombres) like :query or lower(t1.apellidoPaterno) like :query or lower(t1.apellidoMaterno) like :query or lower(t1.numeroDocumento) like :query)")
-	public List<Personal> findAll(String query, Sort sort);
+	@Query("select t1 from Personal t1 Where t1.estado = true and (lower(t1.nombres) like :query or lower(t1.apellidoPaterno) like :query or lower(t1.apellidoMaterno) like :query or lower(t1.numeroDocumento) like :query) and (:sexo='-1' or (:sexo!='-1' and t1.sexo=:sexo))")
+	public List<Personal> findAll(String sexo, String query, Sort sort);
 	
 	@Query("select t1 from Personal t1 Where t1.estado = true and t1.tipoDocumento.idTipoDocumento=:idTipoDocumento and t1.numeroDocumento=:nroDocumento")
 	public List<Personal> findByDocumento(Integer idTipoDocumento, String nroDocumento);

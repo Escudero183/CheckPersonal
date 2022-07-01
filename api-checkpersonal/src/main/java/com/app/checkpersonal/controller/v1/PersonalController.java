@@ -1,5 +1,8 @@
 package com.app.checkpersonal.controller.v1;
 
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +21,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.checkpersonal.config.exception.ApiCheckPersonalException;
+import com.app.checkpersonal.helper.Helpers;
+import com.app.checkpersonal.helper.Thumbnailator;
 import com.app.checkpersonal.model.Capacitacion;
 import com.app.checkpersonal.model.ExperienciaLaboral;
 import com.app.checkpersonal.model.FormacionAcademica;
 import com.app.checkpersonal.model.Habilidad;
 import com.app.checkpersonal.model.Personal;
+import com.app.checkpersonal.model.TipoDocumento;
+import com.app.checkpersonal.model.Ubigeo;
 import com.app.checkpersonal.service.CapacitacionService;
 import com.app.checkpersonal.service.ExperienciaLaboralService;
 import com.app.checkpersonal.service.FormacionAcademicaService;
@@ -42,6 +50,8 @@ import io.swagger.annotations.Authorization;
 @RestController
 @RequestMapping(value = "/api/v1/personal", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class PersonalController {
+	
+	private static String rootPath = "D:\\\\RepositorioApps\\CheckPersonal\\";
 	
 	@Autowired
 	private PersonalService personalService;
@@ -73,9 +83,156 @@ public class PersonalController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "Crea un Personal", authorizations = {@Authorization(value = "apiKey") })	
+	@PostMapping(value = "/personal2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> savePersonal2(						
+			@RequestParam(value = "numeroDocumento", required = false, defaultValue = "") String numeroDocumento,
+			@RequestParam(value = "nombres", required = false, defaultValue = "") String nombres,
+			@RequestParam(value = "apellidoPaterno", required = false, defaultValue = "") String apellidoPaterno,
+			@RequestParam(value = "apellidoMaterno", required = false, defaultValue = "") String apellidoMaterno,
+			@RequestParam(value = "direccion", required = false, defaultValue = "") String direccion,
+			@RequestParam(value = "sexo", required = false, defaultValue = "") String sexo,
+			@RequestParam(value = "foto", required = false, defaultValue = "") String foto,
+			@RequestParam(value = "celular", required = false, defaultValue = "") String celular,
+			@RequestParam(value = "correo", required = false, defaultValue = "") String correo,			
+			@RequestParam(value = "presentacion", required = false, defaultValue = "") String presentacion,
+			@RequestParam(value = "idTipoDocumento", required = false, defaultValue = "0") Integer idTipoDocumento,
+			@RequestParam(value = "idUbigeo", required = false) String idUbigeo,
+			@RequestParam(value = "fechaNacimiento", required = false) Date fechaNacimiento,			
+			@RequestParam(value = "banner", required = false) MultipartFile banner,
+			HttpServletRequest request) throws ApiCheckPersonalException {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		Personal bean = new Personal();
+		bean.setNumeroDocumento(numeroDocumento);
+		bean.setNombres(nombres);
+		bean.setApellidoPaterno(apellidoPaterno);
+		bean.setApellidoMaterno(apellidoMaterno);
+		bean.setDireccion(direccion);
+		bean.setSexo(sexo);
+		bean.setFoto(foto);
+		bean.setCelular(celular);
+		bean.setCorreo(correo);
+		bean.setPresentacion(presentacion);
+		TipoDocumento tipoDoc = new TipoDocumento();
+		tipoDoc.setIdTipoDocumento(idTipoDocumento);
+		bean.setTipoDocumento(tipoDoc);
+		Ubigeo ubigeo = new Ubigeo();
+		ubigeo.setIdUbigeo(idUbigeo);
+		bean.setUbigeo(ubigeo);
+		bean.setFechaNacimiento(fechaNacimiento);
+		bean.setEstado(true);
+				
+		Personal data = personalService.insert(bean);
+		
+		String pathRepo = rootPath;
+		if(banner != null) {
+			String folder = "/banners/" + data.getIdPersonal() + "/";
+			
+			File carpeta = new File(pathRepo+folder);
+			if (!carpeta.exists()) {
+				carpeta.mkdirs();
+			}
+			
+			Helpers metodos = new Helpers();
+			Thumbnailator thumb = new Thumbnailator();
+			String namefile = "BANNER-PROFILE-" + data.getIdPersonal() + "-" + metodos.getAlphaNumeric(6); 
+			String pathLogo = thumb.upLoadFiles(pathRepo,folder,banner,namefile,true,"H");
+			
+			data.setBanner(pathLogo);
+			personalService.update(data);	
+		}
+		
+		result.put("success", true);
+		result.put("message", "Se ha registrado correctamente.");
+		result.put("result", data);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	@ApiOperation(value = "Actualiza un Personal", authorizations = { @Authorization(value = "apiKey")})
+	@PutMapping(value = "/personal2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> updatePersonal2 (
+			@RequestParam(value = "idPersonal", required = false, defaultValue = "0") Integer idPersonal,
+			@RequestParam(value = "numeroDocumento", required = false, defaultValue = "") String numeroDocumento,
+			@RequestParam(value = "nombres", required = false, defaultValue = "") String nombres,
+			@RequestParam(value = "apellidoPaterno", required = false, defaultValue = "") String apellidoPaterno,
+			@RequestParam(value = "apellidoMaterno", required = false, defaultValue = "") String apellidoMaterno,
+			@RequestParam(value = "direccion", required = false, defaultValue = "") String direccion,
+			@RequestParam(value = "sexo", required = false, defaultValue = "") String sexo,
+			@RequestParam(value = "foto", required = false, defaultValue = "") String foto,
+			@RequestParam(value = "celular", required = false, defaultValue = "") String celular,
+			@RequestParam(value = "correo", required = false, defaultValue = "") String correo,			
+			@RequestParam(value = "presentacion", required = false, defaultValue = "") String presentacion,
+			@RequestParam(value = "idTipoDocumento", required = false, defaultValue = "0") Integer idTipoDocumento,
+			@RequestParam(value = "idUbigeo", required = false) String idUbigeo,
+			@RequestParam(value = "fechaNacimiento", required = false) Date fechaNacimiento,			
+			@RequestParam(value = "banner", required = false) MultipartFile banner,
+			HttpServletRequest request) {
+		HashMap<String, Object> result = new HashMap<>();
+		Personal data = personalService.findById(idPersonal);
+		if(data == null) {
+			result.put("success", false);
+			result.put("message", "No existe registro con código: " + idPersonal);
+			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND); 
+		}
+		try {
+			Personal bean = new Personal();
+			bean.setIdPersonal(idPersonal);
+			bean.setNumeroDocumento(numeroDocumento);
+			bean.setNombres(nombres);
+			bean.setApellidoPaterno(apellidoPaterno);
+			bean.setApellidoMaterno(apellidoMaterno);
+			bean.setDireccion(direccion);
+			bean.setSexo(sexo);
+			bean.setFoto(foto);
+			bean.setCelular(celular);
+			bean.setCorreo(correo);
+			bean.setPresentacion(presentacion);
+			TipoDocumento tipoDoc = new TipoDocumento();
+			tipoDoc.setIdTipoDocumento(idTipoDocumento);
+			bean.setTipoDocumento(tipoDoc);
+			Ubigeo ubigeo = new Ubigeo();
+			ubigeo.setIdUbigeo(idUbigeo);
+			bean.setUbigeo(ubigeo);
+			bean.setFechaNacimiento(fechaNacimiento);
+			bean.setEstado(true);
+			bean.setBanner(data.getBanner());
+			personalService.update(bean);
+			
+			String pathRepo = rootPath;
+			if(banner != null) {
+				String folder = "/banners/" + data.getIdPersonal() + "/";
+				
+				File carpeta = new File(pathRepo+folder);
+				if (!carpeta.exists()) {
+					carpeta.mkdirs();
+				}
+				
+				Helpers metodos = new Helpers();
+				Thumbnailator thumb = new Thumbnailator();
+				String namefile = "BANNER-PROFILE-" + data.getIdPersonal() + "-" + metodos.getAlphaNumeric(6);  
+				String pathLogo = thumb.upLoadFiles(pathRepo,folder,banner,namefile,true,"H");
+				
+				bean.setBanner(pathLogo);
+				personalService.update(bean);	
+			}
+			
+			result.put("success", true);
+			result.put("message", "Se ha actualizado los datos del registro.");
+			result.put("result", bean);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+			
+		} catch (Exception ex) {
+			return new ResponseEntity<>(new ApiCheckPersonalException(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}			
+	}
+	
+	
 	@ApiOperation(value = "Lista todas los Personales", authorizations = {@Authorization(value = "apiKey") })
 	@GetMapping(value = "/personal")	
 	public ResponseEntity<?> findAllPersonal(
+			@RequestParam(value = "sexo", required = false, defaultValue = "-1") String sexo,
 			@RequestParam(value = "tipo", required = false, defaultValue = "grilla") String tipo,
 			@RequestParam(value = "query", required = false, defaultValue = "") String query,
 			@RequestParam(value = "page", required = false, defaultValue = "-1") int page,
@@ -95,9 +252,9 @@ public class PersonalController {
 				limit = maxPage;
 			}
 			
-			return new ResponseEntity<>(personalService.findAll(query, page, limit, sortBy), HttpStatus.OK);
+			return new ResponseEntity<>(personalService.findAll(sexo, query, page, limit, sortBy), HttpStatus.OK);
 		}else {			
-			return new ResponseEntity<>(personalService.findAll(query, sortBy), HttpStatus.OK);
+			return new ResponseEntity<>(personalService.findAll(sexo, query, sortBy), HttpStatus.OK);
 		}
 	}
 	
@@ -207,6 +364,13 @@ public class PersonalController {
 		}else {			
 			return new ResponseEntity<>(habilidadService.findAll(idPersonal, query, sortBy), HttpStatus.OK);
 		}
+	}
+	
+	@ApiOperation(value = "Lista habilidades con sus totales", authorizations = {@Authorization(value = "apiKey") })
+	@GetMapping(value = "/habilidad/getTotales")	
+	public ResponseEntity<?> findHabilidadTotals(
+			HttpServletRequest request) {		
+		return new ResponseEntity<>(habilidadService.getTotals(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Obtiene datos de una Habilidad", authorizations = { @Authorization(value = "apiKey")})

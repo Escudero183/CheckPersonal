@@ -34,7 +34,7 @@ public class ExperienciaLaboralService {
 	}
 	
 	public List<ExperienciaLaboral> findAll(Integer idPersonal, String query) {
-		return (List<ExperienciaLaboral>) experienciaLaboralRepository.findAll(idPersonal, query);
+		return (List<ExperienciaLaboral>) experienciaLaboralRepository.findAll(idPersonal, "%" + query + "%");
 	}
 	
 	public ExperienciaLaboral findById(Integer id) {

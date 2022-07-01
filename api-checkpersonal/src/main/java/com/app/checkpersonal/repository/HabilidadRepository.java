@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.app.checkpersonal.model.Habilidad;
+import com.app.checkpersonal.model.IHabilidad;
 
 @Repository
 public interface HabilidadRepository extends JpaRepository<Habilidad, Integer>{
@@ -22,5 +23,8 @@ public interface HabilidadRepository extends JpaRepository<Habilidad, Integer>{
 	
 	@Query("select t1 from Habilidad t1 Where t1.estado = true and (:idPersonal = -1 or (:idPersonal != -1 and t1.idPersonal =:idPersonal)) and (lower(t1.habilidad) like :query)")
 	public List<Habilidad> findAll(Integer idPersonal, String query, Sort sort);
+	
+	@Query(value = "SELECT DISTINCT habilidad, COUNT(*) as total FROM personal.habilidad as t1 WHERE estado = true GROUP BY habilidad", nativeQuery = true)
+	public List<IHabilidad> getTotals();
 
 }
